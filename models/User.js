@@ -20,13 +20,25 @@
         },
         age: {
             type: Number,
-            required: true
         },
         address: {
             type: String,
-            required: true
         },
-    })
+        gender: {
+            type: String,
+            enum: ['male', 'female', 'others'],
+        },
+        role: {
+            type : String,
+            required: true,
+            enum: ['Manager', 'Admin', 'Customer'],
+            default: 'Customer'
+        },
+        city : {
+            type: mongoose.Types.ObjectId,
+            required: true,
+        }
+    },{ timestamps: true })
 
     const User = mongoose.model("User", UserSchema);
 

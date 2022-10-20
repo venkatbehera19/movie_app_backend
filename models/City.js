@@ -7,7 +7,7 @@ const CitySchema = new Schema({
         required : true,
         lowercase : true
     }
-})
+},{ timestamps: true })
 
 const City = mongoose.model("City", CitySchema);
 module.exports = City;

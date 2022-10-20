@@ -15,6 +15,7 @@ configureDB()
 
 app.use(express.json({ extended: false }));
 app.use('/api/city', require('./routes/cityRoutes'));
+app.use('/api/user', require('./routes/userRoutes'));
 
 app.get("/", (req, res, next) => {
     res.send("Movies App is Up");

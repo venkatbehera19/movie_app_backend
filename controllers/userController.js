@@ -40,10 +40,16 @@ userController.loginUser = async (req, res) => {
       }
       jwt.sign(payload, 'Secret24', { expiresIn: 3600 * 24}, (err, token) => {
         if(err) throw err;
-        res.json({ token});
+        res.json({ 
+            token, 
+            name: user.name, 
+            email: user.email, 
+            id: user._id,
+            role: user.role
+        });
       })
     } catch (error) {
-        console.log('Error While creating a user', error)
+        console.log('Error While signin a user', error)
         res.status(500).json({ errors: [{ message: "Server Error"}]});
     }
 }

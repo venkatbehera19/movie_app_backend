@@ -38,6 +38,16 @@ moviesController.updateMovies = async (req, res) => {
     }
 }
 
+moviesController.getAllMovies = async (req, res) => {
+    try {
+        const movies = await Movie.find() || [];
+        res.json(movies);
+    } catch (error) {
+        console.error('Error While getting movies', error)
+        res.status(500).json({ errors: [{ message: "Server Error" }] });
+    }
+}
+
 moviesController.getMovie = async (req, res) => {
     const id = req.params.id;
     try {

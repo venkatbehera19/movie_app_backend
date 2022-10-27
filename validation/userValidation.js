@@ -12,7 +12,7 @@ exports.validateLoginUser = [
         .isEmail()
         .withMessage('Invalid Email')
         .custom(async (email) => {
-            const existingUser = await User.findOne({ email })
+            const existingUser = await User.find({email});
             if (!existingUser) {
                 throw new Error('UserName and Password Invalid.')
             }

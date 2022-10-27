@@ -31,6 +31,10 @@ const MovieSchema = new Schema({
         type: String,
         required: true
     },
+    duration: {
+        type : Number,
+        default: 2
+    },
     genres : {
         type: [String],
         required: true

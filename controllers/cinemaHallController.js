@@ -77,4 +77,15 @@ cinemaHallController.getAllHallByManager = async(req, res) => {
     }
 }
 
+cinemaHallController.getAllHallByCity = async(req, res) => {
+    const id = req.params.id;
+    try {
+       const result = await CinemaHall.find({ city: id}) || [];
+       res.json(result);
+    } catch (error) {
+        console.error('Error While getting all Cinema Hall By City Id', error)
+        res.status(500).json({ errors: [{ message: "Server Error" }] });
+    }
+}
+
 module.exports = cinemaHallController;

@@ -16,7 +16,6 @@ const MovieTimingsSchema = new Schema({
     },
     seats : {
         type : Object,
-        default : {},
         required : true
     }
 },{timestamps: true});

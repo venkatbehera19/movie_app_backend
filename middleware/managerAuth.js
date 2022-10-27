@@ -14,7 +14,7 @@ module.exports = async function (req, res, next) {
         }
         next();
     } catch (error) {
-        console.log('Error While validating Admin', error)
+        console.log('Error While validating Manager', error)
         res.status(500).json({ errors: [{ message: "Server Error" }] });
     }
 }

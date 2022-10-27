@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.post('/', validateOnBoard, onboardController.onBoardManager);
 router.post('/:id', authorization, onboardController.acceptManagerByAdmin)
+router.get('/', authorization, onboardController.getAllManager );
 
 module.exports = router;

@@ -1,22 +1,15 @@
 module.exports = {
     post: {
-        description: "creating a city",
-        tags: ["City"],
-        operationId: "createCity",
-        parameters: [
-            {
-                in: "header",
-                name: "x-auth-token",
-                description: "auth token",
-                required: true,
-            }
-        ],
+        description: "onBoard Manager API",
+        tags: ["Manager"],
+        operationId: "onboardManager",
+        parameters: [],
         requestBody:{
             content : {
                 "application/json": {
                     schema : {
                         type : "object",
-                        "$ref": "#/components/schemas/City"
+                        "$ref": "#/components/schemas/Onboard"
                     }
                 }
             }

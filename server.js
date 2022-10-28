@@ -5,7 +5,6 @@ const configureDB = require('./config/DB.js');
 const bodyParser = require('body-parser');
 
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
 const swaggerDocs = require('./docs');
 
 require('dotenv').config();
@@ -16,10 +15,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors());
 configureDB()
-
 app.use(express.json({ extended: false }));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/api-docs-2', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/api/city', require('./routes/cityRoutes'));
 app.use('/api/user', require('./routes/userRoutes'));
 app.use('/api/hall', require('./routes/cinemaHallRoutes'));

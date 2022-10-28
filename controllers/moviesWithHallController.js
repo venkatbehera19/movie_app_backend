@@ -1,4 +1,6 @@
 const { validationResult } = require("express-validator");
+const { removeDuplicates } = require("../helper/movies");
+const CinemaHall = require("../models/CinemaHall");
 const Movie = require("../models/Movie");
 const MovieWithHall = require("../models/MovieWithHall");
 
@@ -41,8 +43,31 @@ moviesWithHallController.getAllMoviesByCinemaHall = async (req, res) => {
         }, [])
         let resultMovies = all_movies_id.map(async(id) => await Movie.findOne(id));
         resultMovies = await Promise.all(resultMovies);
-        console.log('allMoviesInformation',resultMovies);
         res.json(resultMovies);
+    } catch (error) {
+        console.error('Error While getting all movies of a cinema hall', error)
+        res.status(500).json({ errors: [{ message: "Server Error" }] });
+    }
+}
+
+moviesWithHallController.getAllMoviesByCity = async(req, res) => {
+    const id = req.params.id;
+    try {
+        const allHallInformation = await CinemaHall.find({ city: id}) || [];
+        const all_hall_id = allHallInformation.reduce((acc, current) => {
+            acc.push(current._id);
+            return acc;
+        },[]);
+        let allMovieIdArr = all_hall_id.map(async(id) => await MovieWithHall.find({ hall_id: id}));
+        allMovieIdArr = await Promise.all(allMovieIdArr);
+        // console.log(allMovieIdArr.flat());
+        const all_movies_id = allMovieIdArr.flat().reduce((acc, current) => {
+            acc.push(current.movies_id);
+            return acc;
+        },[]);
+        removeDuplicates(all_movies_id);
+        // console.log(all_movies_id)
+        res.json(allMovieIdArr.flat());
     } catch (error) {
         console.error('Error While getting all movies of a cinema hall', error)
         res.status(500).json({ errors: [{ message: "Server Error" }] });

@@ -1,22 +1,22 @@
 module.exports = {
     post: {
-        description: "creating a city",
-        tags: ["City"],
-        operationId: "createCity",
+        description: "creating a hall",
+        tags: ["Cinema Hall"],
+        operationId: "createHall",
         parameters: [
             {
                 in: "header",
                 name: "x-auth-token",
                 description: "auth token",
                 required: true,
-            }
+            },
         ],
         requestBody:{
             content : {
                 "application/json": {
                     schema : {
                         type : "object",
-                        "$ref": "#/components/schemas/City"
+                        "$ref": "#/components/schemas/Hall"
                     }
                 }
             }
@@ -27,6 +27,9 @@ module.exports = {
             },
             500: {
                 description: 'Internal Server Error'
+            },
+            401: {
+                description: 'Unauthorized'
             }
         }
     }

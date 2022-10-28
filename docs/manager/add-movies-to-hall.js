@@ -1,8 +1,8 @@
 module.exports = {
     post: {
-        description: "creating a city",
-        tags: ["City"],
-        operationId: "createCity",
+        description: "add a movies to the specified hall",
+        tags: ["Manager"],
+        operationId: "addMoviesToHall",
         parameters: [
             {
                 in: "header",
@@ -16,7 +16,7 @@ module.exports = {
                 "application/json": {
                     schema : {
                         type : "object",
-                        "$ref": "#/components/schemas/City"
+                        "$ref": "#/components/schemas/MoviesToHall"
                     }
                 }
             }

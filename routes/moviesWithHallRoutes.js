@@ -9,5 +9,6 @@ router.delete('/:id', managerAuth, moviesWithHallController.deleteMovieFormHall)
 
 // get all the Movies that related to perticular cinema Hall
 router.get('/:id', moviesWithHallController.getAllMoviesByCinemaHall)
-
+// get all the Movies that all are related to same city
+router.get('/city/:id', moviesWithHallController.getAllMoviesByCity);
 module.exports = router;

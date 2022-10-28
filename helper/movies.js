@@ -18,4 +18,22 @@ const isTimeAvailable = (allDate, selectedDate) => {
     return isChecked;
 }
 
-module.exports = { isTimeAvailable }
+const removeDuplicates = (arrData) => {
+    // console.log(arrData);
+    const result = [];
+    arrData.forEach((data) => {
+        if(!result.includes(data.toString())){
+            result.push(data.toString())
+        }
+    })
+    console.log('result',result);
+}
+
+// removeDuplicatesUsingObj = (arrData) => {
+//     const result = [];
+//     for(let i = 1; i < arrData.length; i++){
+
+//     }
+// }
+
+module.exports = { isTimeAvailable , removeDuplicates}

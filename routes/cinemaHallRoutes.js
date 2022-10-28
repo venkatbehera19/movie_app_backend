@@ -12,7 +12,7 @@ router.delete('/:id', managerAuth, cinemaHallController.deleteHall);
 router.put('/:id', validateHall, managerAuth, cinemaHallController.updateHall);
 
 // Manager
-router.get('/all/:id', authorization, cinemaHallController.getAllHallByManager)
+router.get('/all/:id', managerAuth, cinemaHallController.getAllHallByManager)
 
 // User 
 router.get('/city/:id', cinemaHallController.getAllHallByCity)

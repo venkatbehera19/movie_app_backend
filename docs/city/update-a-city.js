@@ -1,9 +1,15 @@
 module.exports = {
-    post: {
-        description: "creating a city",
+    put : {
+        description: "Update a city",
+        operationId: "updateACity",
         tags: ["City"],
-        operationId: "createCity",
         parameters: [
+            {
+                in: "path",
+                name : "id",
+                description : "Enter the parameter",
+                required : true
+            },
             {
                 in: "header",
                 name: "x-auth-token",
@@ -22,11 +28,11 @@ module.exports = {
             }
         },
         responses: {
-            200: {
-                description: 'User Created Sucessfully'
+            200 : {
+                description: "Getting all the city"
             },
-            500: {
-                description: 'Internal Server Error'
+            500 : {
+                description : "Internal Server Error"
             }
         }
     }

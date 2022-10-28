@@ -1,8 +1,9 @@
+const mongoose = require('mongoose');
 module.exports = {
     get : {
-        description: "Get All the city",
-        operationId: "getAllCity",
-        tags: ["City"],
+        description: "Get all Movie",
+        operationId: "getAllMovie",
+        tags: ["Movie"],
         parameters: [],
         responses: {
             200 : {

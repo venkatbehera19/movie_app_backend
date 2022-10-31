@@ -19,21 +19,13 @@ const isTimeAvailable = (allDate, selectedDate) => {
 }
 
 const removeDuplicates = (arrData) => {
-    // console.log(arrData);
-    const result = [];
+    const movies_id = [];
     arrData.forEach((data) => {
-        if(!result.includes(data.toString())){
-            result.push(data.toString())
+        if(!movies_id.includes(data.toString())){
+            movies_id.push(data.toString())
         }
     })
-    console.log('result',result);
+    return movies_id;
 }
-
-// removeDuplicatesUsingObj = (arrData) => {
-//     const result = [];
-//     for(let i = 1; i < arrData.length; i++){
-
-//     }
-// }
 
 module.exports = { isTimeAvailable , removeDuplicates}

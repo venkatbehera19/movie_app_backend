@@ -15,5 +15,7 @@ router.put('/:id', validateHall, managerAuth, cinemaHallController.updateHall);
 router.get('/all/:id', managerAuth, cinemaHallController.getAllHallByManager)
 
 // User 
-router.get('/city/:id', cinemaHallController.getAllHallByCity)
+router.get('/city/:id', cinemaHallController.getAllHallByCity);
+router.get('/timings/:moviesId/city/:cityId', cinemaHallController.getAllHallAndTimmingsByMoviesId);
+router.get('/seat/:id',cinemaHallController.getAllSeatByTimeId);
 module.exports = router;

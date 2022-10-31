@@ -60,14 +60,16 @@ moviesWithHallController.getAllMoviesByCity = async(req, res) => {
         },[]);
         let allMovieIdArr = all_hall_id.map(async(id) => await MovieWithHall.find({ hall_id: id}));
         allMovieIdArr = await Promise.all(allMovieIdArr);
-        // console.log(allMovieIdArr.flat());
         const all_movies_id = allMovieIdArr.flat().reduce((acc, current) => {
             acc.push(current.movies_id);
             return acc;
         },[]);
-        removeDuplicates(all_movies_id);
-        // console.log(all_movies_id)
-        res.json(allMovieIdArr.flat());
+        const filterdMoviesId = removeDuplicates(all_movies_id);
+        let allMoviesId = filterdMoviesId.map(async (moviesId) => {
+            return await Movie.findById({_id : moviesId})
+        })
+        allMoviesId =await Promise.all(allMoviesId);
+        res.json(allMoviesId);
     } catch (error) {
         console.error('Error While getting all movies of a cinema hall', error)
         res.status(500).json({ errors: [{ message: "Server Error" }] });

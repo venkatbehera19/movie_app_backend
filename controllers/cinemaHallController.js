@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const CinemaHall = require("../models/CinemaHall");
+const MovieTimings = require("../models/MovieTimings");
 const User = require("../models/User");
 
 const cinemaHallController = {};
@@ -84,6 +85,80 @@ cinemaHallController.getAllHallByCity = async(req, res) => {
        res.json(result);
     } catch (error) {
         console.error('Error While getting all Cinema Hall By City Id', error)
+        res.status(500).json({ errors: [{ message: "Server Error" }] });
+    }
+}
+
+const checkIsPresent = (arr, objectId) => {
+    return arr.some((arrDetails) => {
+        return arrDetails?.hall._id === objectId;
+    })
+}
+
+cinemaHallController.getAllHallAndTimmingsByMoviesId = async (req, res) => {
+    const movieId = req.params.moviesId;
+    const cityId = req.params.cityId;
+    try {
+        // get all the hall in the city by movies Id
+        const allMoviesWithHall = await MovieTimings.find({ movie_id: movieId});
+        // all hallId by moviesId
+        let transformedAllMoviesWithHall = allMoviesWithHall.map(async(allMovies) => {
+            const hallDetails = await CinemaHall.find({_id: allMovies.hall_id});
+            return hallDetails;
+        })
+        transformedAllMoviesWithHall = await (await Promise.all(transformedAllMoviesWithHall)).flat();
+        const arr = [];
+        allMoviesWithHall.forEach((allMovie, index) => {
+            const hallDetails = transformedAllMoviesWithHall.find((allMov) => {
+                return allMov._id.equals(allMovie.hall_id)
+            });
+            arr.push({
+                id: index+1,
+                hall: hallDetails,
+                time: allMovie.time,
+                createdAt: allMovie.createdAt,
+                updatedAt: allMovie.updatedAt,
+                timeIndex: allMovie._id
+            })
+        });
+        const result = [];
+        arr.forEach((allData) => {
+            if(!checkIsPresent(result, allData.hall._id)){
+                result.push({
+                    id: allData.id,
+                    hall: allData.hall,
+                    time: [
+                        {
+                            _id : allData.timeIndex,
+                            time_slot : allData.time
+                        }
+                    ]
+                });
+            }else{
+                const findOutData = result.findIndex((resultData) => {
+                    return resultData.hall._id === allData.hall._id;
+                })
+                console.log('Works',findOutData);
+                result[findOutData] = {
+                    ...result[findOutData],
+                    time: [...result[findOutData].time, { _id: allData.timeIndex,time_slot : allData.time }]
+                }
+            }
+        })
+        res.json(result);
+    } catch (error) {
+        console.error('Error While getting all hall  By movie Id', error)
+        res.status(500).json({ errors: [{ message: "Server Error" }] });
+    }
+}
+
+cinemaHallController.getAllSeatByTimeId = async (req, res) => {
+    const id = req.params.id;
+    try {
+       const result = await MovieTimings.findById(id);
+       res.json(result);
+    } catch (error) {
+        console.error('Error While getting all seat by timmings Id', error)
         res.status(500).json({ errors: [{ message: "Server Error" }] });
     }
 }
